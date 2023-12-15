@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -65,14 +65,14 @@ namespace booty.Controllers
 
         public ActionResult UserUpdate()
         {
-          
             FriendsEntities rdbe = new FriendsEntities();
             User u = (from a in rdbe.Users
-                     where a.UserID == 3
-                     select a).FirstOrDefault();
+                      where a.UserID == 2
+                      select a).FirstOrDefault();
+
 
             u.Password = "guapo";
-            u.RoleID = 2;
+            u.RoleID = 3;
             rdbe.SaveChanges();
 
             return View();
@@ -80,13 +80,24 @@ namespace booty.Controllers
 
         public ActionResult UserDelete()
         {
-
             FriendsEntities rdbe = new FriendsEntities();
             User u = (from a in rdbe.Users
-                      where a.UserID == 3
+                      where a.UserID == 2
                       select a).FirstOrDefault();
             rdbe.Users.Remove(u);
             rdbe.SaveChanges();
+
+            return View();
+        }
+
+        public ActionResult ShowUsers()
+        {
+            FriendsEntities fe = new FriendsEntities();
+
+            var userList = (from a in fe.Users
+                            select a).ToList();
+
+            ViewData["ListOfUsers"] = userList;
 
             return View();
         }
